@@ -2,8 +2,22 @@ kind: pipeline
 name: default
 
 steps:
-  - name: test
+  - name: install dependencies
     image: node
     commands:
       - npm install
+    volumes:
+      - name: cache
+        path: ./node_modules
+
+  - name: test
+    image: node
+    commands:
       - npm test
+    volumes:
+      - name: cache
+        path: ./node_modules
+
+volumes:
+  - name: cache
+    temp: {}
